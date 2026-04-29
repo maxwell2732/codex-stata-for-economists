@@ -1,0 +1,33 @@
+# Quarto project file for the reports/ folder.
+#
+# Renders all .qmd files in this folder via the Stata Quarto engine
+# (requires `nbstata` or `pystata` — see CLAUDE.md prerequisites).
+# Output goes to docs/ for GitHub Pages compatibility.
+
+project:
+  type: default
+  output-dir: ../docs
+
+execute:
+  echo: false
+  warning: false
+  cache: true
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    embed-resources: true
+  pdf:
+    documentclass: article
+    geometry:
+      - margin=1in
+    fig-pos: "H"
+    keep-tex: false
+
+bibliography: ../references.bib
+csl: https://www.zotero.org/styles/american-economic-review

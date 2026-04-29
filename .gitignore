@@ -1,0 +1,128 @@
+# ==============================================================================
+# .gitignore — Stata Research Pipeline (Template)
+# ==============================================================================
+#
+# DATA PRIVACY: anything under data/raw/ or data/derived/ is NEVER committed.
+# The /scripts/check_data_safety.py pre-commit script enforces this.
+#
+# OUTPUT POLICY: tables/ and figures/ ARE committed (lightweight; useful for
+# reviewers to inspect). Logs are NOT committed (often bulky, may leak data).
+
+# ------------------------------------------------------------------------------
+# Raw and derived data — NEVER committed (only the .gitkeep + README)
+# ------------------------------------------------------------------------------
+data/raw/**
+!data/raw/.gitkeep
+!data/raw/README.md
+data/derived/**
+!data/derived/.gitkeep
+!data/derived/README.md
+
+# Catch-all data extensions outside whitelisted folders
+*.dta
+*.sav
+*.por
+*.parquet
+*.feather
+# Allow committed example/test fixtures and committed table outputs
+!output/tables/**/*.dta
+!templates/examples/**/*.dta
+!explorations/**/output/**/*.dta
+
+# Raw-data-style spreadsheets (allow them under output/)
+*.xls
+*.xlsx
+!output/tables/**/*.xlsx
+!templates/examples/**/*.xlsx
+
+# Raw CSVs are blocked outside output/ to prevent accidental commits
+data/**/*.csv
+!data/**/.gitkeep
+
+# ------------------------------------------------------------------------------
+# Stata logs and ephemeral files
+# ------------------------------------------------------------------------------
+logs/**
+!logs/.gitkeep
+!logs/README.md
+*.log
+*.smcl
+*.gph                 # Stata graph binary (export to .pdf/.png/.svg instead)
+*.do.bak
+~$*.dta              # Stata lock files
+.stata_kernel_cache/
+
+# ------------------------------------------------------------------------------
+# LaTeX build artifacts (Quarto PDF rendering may produce these)
+# ------------------------------------------------------------------------------
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.synctex.gz
+*.run.xml
+*-blx.bib
+
+# ------------------------------------------------------------------------------
+# Quarto rendering artifacts
+# ------------------------------------------------------------------------------
+/.quarto/
+reports/_freeze/
+reports/*_files/
+
+# ------------------------------------------------------------------------------
+# Python
+# ------------------------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# ------------------------------------------------------------------------------
+# R (kept in case forks use R for ancillary plots)
+# ------------------------------------------------------------------------------
+.Rproj.user/
+.Rhistory
+.RData
+.Rdata
+
+# ------------------------------------------------------------------------------
+# OS files
+# ------------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ------------------------------------------------------------------------------
+# Claude Code / Codex local files (not shared across machines)
+# ------------------------------------------------------------------------------
+.claude/settings.local.json
+.claude/state/
+.codex/
+# Root-level settings.json is non-standard (canonical location is .claude/settings.json).
+# Some users keep a personal copy here with proxy / env settings — gitignored.
+/settings.json
+
+# ------------------------------------------------------------------------------
+# IDE
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ------------------------------------------------------------------------------
+# Local secrets (never commit; provide a .env.example instead)
+# ------------------------------------------------------------------------------
+.env
+.env.local
+*.key
+*.pem

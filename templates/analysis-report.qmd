@@ -1,0 +1,110 @@
+---
+title: "[YOUR PROJECT TITLE]"
+author: "[YOUR NAME]"
+date: today
+date-format: iso
+abstract: |
+  [One-paragraph abstract: question, data, method, headline result, contribution.]
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+  pdf:
+    documentclass: article
+    keep-tex: true
+    fig-pos: "H"
+bibliography: ../references.bib
+csl: https://www.zotero.org/styles/american-economic-review
+---
+
+<!--
+================================================================================
+  HOW TO USE THIS TEMPLATE
+================================================================================
+
+  This is a Quarto report driven by the Stata Quarto engine. The pipeline
+  produces all tables (output/tables/*.tex / *.csv) and figures
+  (output/figures/*.pdf / *.png) BEFORE this report renders. The report
+  *includes* those artifacts; it never re-runs analysis.
+
+  Render with:
+      quarto render reports/analysis_report.qmd
+  or use the /render-report skill.
+
+  Numerical claims in the prose MUST trace to a logs/ line; the log-validator
+  agent enforces this before committing.
+
+================================================================================
+-->
+
+## Introduction
+
+[Motivate the question. ~3 paragraphs. End with the paper's contribution and
+roadmap.]
+
+## Data {#sec-data}
+
+[Describe the data sources, sample period, unit of observation, and any
+restrictions applied to construct the analysis sample. Reference the data
+dictionary at `data/README.md` for variable details.]
+
+**Sample size after restrictions:** [N from logs/02_construct_sample.log,
+quote the line].
+
+```{=html}
+<!-- Include the descriptive-statistics table produced by Stata -->
+```
+::: {.content-visible when-format="html"}
+{{< include ../output/tables/descriptive_stats.tex >}}
+:::
+
+## Identification {#sec-identification}
+
+[State the exact estimand, the identifying assumption, and the evidence for it.
+Cite key references.]
+
+We estimate the average treatment effect on the treated (ATT) under the
+parallel-trends assumption [@callawaysantanna2021]. Pre-trend evidence is
+shown in @fig-eventstudy.
+
+## Empirical Strategy {#sec-strategy}
+
+[Lay out the regression specification. Use math display for the equation.
+Discuss SE choice and FE structure.]
+
+We estimate
+
+$$
+y_{it} = \alpha_i + \gamma_t + \beta \cdot D_{it} + X_{it}'\theta + \varepsilon_{it}
+$$ {#eq-main}
+
+where $D_{it}$ is the treatment indicator and $X_{it}$ is a vector of controls.
+Standard errors are clustered at [unit level] following [@bertrandduflomullainathan2004].
+
+## Results {#sec-results}
+
+The headline ATT is reported in @tbl-main.
+
+::: {.content-visible when-format="html"}
+{{< include ../output/tables/main_regression.tex >}}
+:::
+
+[Discuss the magnitude, sign, and statistical significance. Cite the log
+line that produced the headline number, e.g., `logs/03_analysis_main_regression.log:412`.]
+
+![Event-study estimates with 95% CIs](../output/figures/event_study.pdf){#fig-eventstudy width=80%}
+
+## Robustness {#sec-robustness}
+
+[Walk through alternate specifications. Reference each in turn.]
+
+## Conclusion {#sec-conclusion}
+
+[Restate the result, the assumption it relies on, and what it implies.]
+
+## References
+
+::: {#refs}
+:::
