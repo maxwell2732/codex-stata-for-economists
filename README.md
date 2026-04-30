@@ -1,4 +1,6 @@
-# 面向经济学实证研究的 Stata 可复现工作流
+[![DOI](https://zenodo.org/badge/1225085678.svg)](https://doi.org/10.5281/zenodo.19902598)
+
+# 面向经管专业的 Stata 可复现 Codex 工作流
 
 **作者：** 朱 晨 | 遗传社科研究 Chen Zhu | China Agricultural University (CAU)
 **最后更新：** 2026-04-30
