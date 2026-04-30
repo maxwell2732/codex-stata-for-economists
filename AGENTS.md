@@ -83,7 +83,9 @@ python scripts/check_data_safety.py --staged $(git diff --cached --name-only)
 - Use one project-wide seed unless a task has a documented reason to do otherwise.
 - Open and close logs inside runnable do-files.
 - Store estimation results with `estimates store` or `est store` when table assembly depends on them.
-- Export figures as `.pdf` and `.png`; do not keep `.gph` as a committed artifact.
+- Export figures with native Stata `graph export` as both `.pdf` and `.png`; do not keep `.gph` as a committed artifact.
+- When generating a figure, always create both PDF and PNG outputs unless Stata itself cannot run.
+- Use a muted Stata-style graph design by default: white or very light gray background, subtle horizontal gridlines only, solid blue marks or bars using RGB `"49 145 255"` / HEX `#3191FF`, no glossy or gradient-like effects, no strong contrast edges, Arial or default Stata Sans fonts, normal-weight dark blue-gray titles, modest axis/tick label sizes, and Stata-default-like proportions with enough whitespace.
 - Prefer `esttab` outputs as `.tex` plus `.csv` for auditability.
 - Cluster standard errors at the most defensible aggregate level and document the choice.
 
@@ -125,7 +127,7 @@ Never add these to version control:
 Allowed committed outputs:
 
 - `output/tables/*.csv`, `*.tex`, and other small non-PII summary tables.
-- `output/figures/*.pdf`, `*.png`, `*.svg`.
+- `output/figures/*.pdf`, `*.png`.
 - Template/example fixtures only when intentionally whitelisted.
 
 ## Quality Gates

@@ -1,6 +1,6 @@
 # 面向经济学实证研究的 Stata 可复现工作流
 
-**作者：** 朱晨 | 中国农业大学  
+**作者：** 朱 晨 | 遗传社科研究 Chen Zhu | China Agricultural University (CAU)
 **最后更新：** 2026-04-30
 
 这是一个为经济学实证研究准备的 Stata 项目模板。核心目标是让一个研究项目从原始数据、清洗、变量构造、模型估计，到表格、图形和 Quarto 报告，都能被稳定复现、被日志验证，并且适合由 Codex 协助维护。
@@ -60,7 +60,7 @@ Claude Code 兼容文件仍然存在：
 | 可复现 | do-file 固定 Stata `version`，统一随机种子，使用相对路径，流水线从 `00_master.do` 启动 |
 | 日志验证 | 数值结论必须来自 Stata log 或输出表格；无日志则不报告结果 |
 | 数据保护 | `.gitignore` 阻止 raw/derived 数据、Stata 日志和数据文件误提交 |
-| 发表级输出 | 表格通过 `esttab` 等工具输出，图形通过 `graph export` 输出为 `.pdf` 和 `.png` |
+| 发表级输出 | 表格通过 `esttab` 等工具输出，图形通过 Stata 原生 `graph export` 同时输出 `.pdf` 和 `.png` |
 
 ---
 
@@ -143,7 +143,8 @@ python scripts/quality_score.py scripts/check_data_safety.py
 - 使用相对路径，不写死本机绝对路径。
 - 涉及随机过程时设置随机种子。
 - 回归结果如果要进入表格，应使用 `estimates store` 或 `est store` 保存。
-- 图形导出为 `.pdf` 和 `.png`，不要提交 `.gph`。
+- 图形必须由 Stata 原生导出为 `.pdf` 和 `.png` 两种格式，不要用 SVG 转换替代。
+- 图形默认采用 Stata 风格：白色或极浅灰背景、浅灰细横向网格线、`#3191FF` / RGB `"49 145 255"` 蓝色、Arial 或 Stata Sans 字体、标题正常字重且不过大、整体留白充足。
 - 新增或修改的 Stata 注释默认使用中文。
 
 ---
@@ -174,7 +175,6 @@ python scripts/quality_score.py scripts/check_data_safety.py
 - `output/tables/*.tex`
 - `output/figures/*.pdf`
 - `output/figures/*.png`
-- `output/figures/*.svg`
 
 如果确实需要提交某个聚合数据或示例数据，必须明确说明原因，并通过 `.gitignore` 做最小范围白名单。
 

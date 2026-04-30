@@ -1,0 +1,5 @@
+educ_group,educ_group_name,N,mean_faminc,sd_faminc,min_faminc,max_faminc
+Less than high school,Less than high school,160,17777.676,9283.9326,3305,68035
+High school,High school,381,21539.463,10240.598,1500,88000
+Some college,Some college,109,27812.945,11763.585,7700,73600
+College or more,College or more,103,32010.816,16326.415,7774,96000

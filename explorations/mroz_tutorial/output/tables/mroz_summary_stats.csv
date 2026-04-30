@@ -1,0 +1,11 @@
+variable,label,N,mean,sd,min,max
+inlf,In labor force,753,.56839309,.49562951,0,1
+hours,Hours worked in 1975,753,740.57636,871.31422,0,4950
+age,Woman's age,753,42.537849,8.072574,30,60
+educ,Years of education,753,12.286853,2.2802458,5,17
+wage,Estimated hourly wage,428,4.1776815,3.3102824,.12819999,25
+faminc,Family income,753,23080.595,12190.202,1500,96000
+kidslt6,Number of children under 6,753,.2377158,.52395904,0,3
+kidsge6,Number of children age 6-18,753,1.3532537,1.3198739,0,8
+exper,Labor market experience,753,10.63081,8.0691299,0,45
+nwifeinc,Non-wife income, thousand dollars,753,20.128964,11.634797,-.02905745,96
