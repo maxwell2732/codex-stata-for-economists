@@ -6,9 +6,57 @@
 
 **最后更新：** 2026-04-30
 
-这是一个为经济学实证研究准备的 Stata 项目模板。核心目标是让一个研究项目从原始数据、清洗、变量构造、模型估计，到表格、图形和 Quarto 报告，都能被稳定复现、被日志验证，并且适合由 Codex 协助维护。
+这是一个为经济学实证研究准备的 Stata 工作流。核心目标是让一个研究项目从原始数据、清洗、变量构造、模型估计，到表格、图形和 Quarto 报告，都能被稳定复现、被日志验证，并且适合由 Codex 协助维护。
 
 本仓库原本包含 Claude Code 配置；现在已经改为 **Codex 优先、Claude Code 兼容** 的结构。Codex 进入项目后应优先读取 `AGENTS.md`，原有 `.claude/` 和 `CLAUDE.md` 保留用于兼容 Claude Code，也可作为更详细的规则参考。
+
+生成的 Stata 代码及图表示例：
+
+<p align="center">
+  <img src="explorations/mroz_tutorial/output/figures/mroz_faminc_histogram.png" width="45%">
+  <img src="explorations/mroz_tutorial/output/figures/mroz_wage_educ_scatter.png" width="45%">
+</p>
+
+
+<p align="center">
+  <img src="master_supporting_docs/supporting_papers/codeexample1.png" width="45%">
+  <img src="master_supporting_docs/supporting_papers/codeexample2.png" width="45%">
+</p>
+
+---
+
+## 快速上手指南
+
+> 在开始之前：必须已安装 Codex，Stata，Python 3 （或 Miniconda）和 git（同时注册 GitHub 账号）。推荐安装 Quarto。
+
+### Step 1. Fork & Clone
+
+```bash
+# 在 GitHub 上克隆此仓库（在仓库页面点击“ Fork ”），然后：
+# （ 将“ YOUR_USERNAME ”替换为你自己的 GitHub 用户名 ）
+
+git clone https://github.com/YOUR_USERNAME/codex-stata-for-economists.git my-codex-stata-for-economists
+cd my-codex-stata-for-economists
+```
+也可以将本仓库下载（zip文件），本地解压缩。但这种方法无法进行版本控制，故不太推荐。
+
+### Step 2. 打开 Codex 并复制粘贴以下指令
+
+```bash
+# 确保已进入本地仓库目录下，如 C:\my-codex-stata-for-economists， 然后启动 Codex ：
+
+codex
+```
+
+将准备进行分析的 *.dta 数据文件放入到 `data/raw/` 文件夹中，然后根据自己需求修改以下 Prompt 并复制粘贴到 Codex 中：
+
+
+> 我把数据 **[Data NAME.dta]** 放到 data/raw/里了，请阅读 Agents.md 等 configuration files ，根据规则帮我用 Stata 进行分析，生成 **[描述性统计、直方图、散点图、方差分析、OLS、工具变量回归、Logit回归结果]**，代码存成一个 do file，并且加上详细的中文代码注释，方便我之后复现。生成的图表保存在 output/ 中。
+
+
+**该 Prompt 用途：** Codex 会阅读仓库中的工作流配置文件，调取相应 Stata Skills，计划并实施 Stata 分析流程，生成结果并验证.
+
+**如果 Codex 中途困在寻找 Python 和 Stata：** 按 Esc 暂停，并告诉 Codex 你的 Python 和 Stata 版本及所在位置。
 
 ---
 
@@ -24,8 +72,6 @@
 - 图形输出到 `output/figures/`。
 - 报告使用 `reports/analysis_report.qmd`，通过 Quarto 渲染。
 - 探索性分析、教学示例和一次性实验放在 `explorations/`。
-
-这个模板不是一个已经完成的研究项目，而是一个可复用的研究项目骨架。当前正式流水线基本是骨架，`explorations/` 中包含两个可参考的教学示例。
 
 ---
 
