@@ -2,9 +2,10 @@
 """
 check_data_safety.py — Block accidental commits of raw / derived datasets.
 
-The Stata Research Pipeline template guarantees that nothing under
-`data/raw/` or `data/derived/` is ever committed. This script enforces that
-guarantee at commit time.
+The Stata Research Pipeline template guarantees that raw or derived datasets
+are not committed. This script enforces that guarantee at commit time by
+blocking protected data directories and data-like file extensions outside
+narrow, documented output/example exceptions.
 
 Forkers wire this into their git pre-commit hook. The standard install is
 documented in README.md and looks like:
@@ -41,25 +42,39 @@ ALWAYS_FORBIDDEN_PREFIXES = (
 # Files allowed inside the always-forbidden prefixes (markers + docs).
 ALLOWED_INSIDE_FORBIDDEN = {".gitkeep", "README.md"}
 
-# Binary data extensions blocked outside whitelisted dirs.
-BLOCKED_DATA_EXTS = {".dta", ".sav", ".por", ".parquet", ".feather"}
-
-# CSV is blocked under data/ specifically.
-CSV_BLOCKED_PREFIXES = ("data/",)
-
-# Spreadsheet extensions: blocked outside whitelisted dirs.
-BLOCKED_SHEET_EXTS = {".xls", ".xlsx"}
+# Data-like extensions blocked outside narrow, documented output dirs.
+BLOCKED_DATA_EXTS = {
+    ".dta",
+    ".sav",
+    ".por",
+    ".parquet",
+    ".feather",
+    ".csv",
+    ".json",
+    ".jsonl",
+    ".xls",
+    ".xlsx",
+}
 
 # Stata logs and graph binaries are NEVER committed.
 ALWAYS_BLOCKED_EXTS = {".log", ".smcl", ".gph"}
 
-# Directories where committed binary data is OK (small aggregated outputs,
-# example fixtures shipped with the template).
-WHITELISTED_BINARY_DIRS = (
+# Directories where committed tabular output is OK (small aggregated outputs,
+# example fixtures shipped with the template). Do not whitelist whole sandbox
+# roots such as explorations/.
+WHITELISTED_TABLE_DIRS = (
     "output/tables/",
     "templates/examples/",
-    "explorations/",       # exploration outputs may include small .dta
 )
+
+# Extensions allowed in normal table-output directories.
+TABLE_OUTPUT_EXTS = {".csv", ".xls", ".xlsx"}
+
+# Extensions allowed in explicit template/example fixture directories.
+TEMPLATE_EXAMPLE_EXTS = {".dta", ".csv", ".xls", ".xlsx"}
+
+# Official project tables may also include small Stata-format audit artifacts.
+PROJECT_TABLE_EXTS = TABLE_OUTPUT_EXTS | {".dta"}
 
 
 # --- Core check --------------------------------------------------------------
@@ -67,6 +82,22 @@ WHITELISTED_BINARY_DIRS = (
 def normalize(p: str) -> str:
     """Use forward slashes so prefix matching works on Windows too."""
     return p.replace("\\", "/")
+
+
+def is_exploration_table_output(p: str) -> bool:
+    """Return True for explorations/<name>/output/tables/... paths."""
+    return p.startswith("explorations/") and "/output/tables/" in p
+
+
+def allowed_data_output(path: str, ext: str) -> bool:
+    """Return True only for documented, narrow data-output exceptions."""
+    if path.startswith("output/tables/"):
+        return ext in PROJECT_TABLE_EXTS
+    if path.startswith("templates/examples/"):
+        return ext in TEMPLATE_EXAMPLE_EXTS
+    if is_exploration_table_output(path):
+        return ext in TABLE_OUTPUT_EXTS
+    return False
 
 
 def is_unsafe(path: str) -> str:
@@ -89,19 +120,13 @@ def is_unsafe(path: str) -> str:
     if ext in ALWAYS_BLOCKED_EXTS:
         return f"forbidden extension: {ext} (Stata logs / graph binaries never commit)"
 
-    # 3) CSV under data/ is blocked.
-    if ext == ".csv" and any(p.startswith(pref) for pref in CSV_BLOCKED_PREFIXES):
-        return f"forbidden: .csv under data/ (raw CSVs may not be committed)"
-
-    # 4) Binary data extensions outside whitelisted dirs.
+    # 3) Data-like extensions outside narrow whitelisted output dirs.
     if ext in BLOCKED_DATA_EXTS:
-        if not any(p.startswith(d) for d in WHITELISTED_BINARY_DIRS):
-            return f"forbidden binary data: {ext} outside whitelisted dirs ({', '.join(WHITELISTED_BINARY_DIRS)})"
-
-    # 5) Spreadsheets outside whitelisted dirs.
-    if ext in BLOCKED_SHEET_EXTS:
-        if not any(p.startswith(d) for d in WHITELISTED_BINARY_DIRS):
-            return f"forbidden spreadsheet: {ext} outside whitelisted dirs"
+        if not allowed_data_output(p, ext):
+            return (
+                f"forbidden data-like file: {ext} outside whitelisted table/example dirs "
+                f"({', '.join(WHITELISTED_TABLE_DIRS)}, explorations/*/output/tables/)"
+            )
 
     return ""
 
@@ -173,7 +198,10 @@ def main():
         print("[check_data_safety] OK -- no forbidden paths detected.")
         return 0
 
-    print("[check_data_safety] BLOCKED -- the following paths must not be committed:", file=sys.stderr)
+    print(
+        "[check_data_safety] BLOCKED -- the following paths must not be committed:",
+        file=sys.stderr,
+    )
     for path, reason in unsafe:
         print(f"  - {path}", file=sys.stderr)
         print(f"      reason: {reason}", file=sys.stderr)

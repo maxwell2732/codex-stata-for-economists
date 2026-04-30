@@ -121,13 +121,14 @@ Never add these to version control:
 - `data/derived/**`, except `.gitkeep` and documentation.
 - Stata logs under `logs/`.
 - Stata binary graphs `*.gph`.
-- Data files such as `*.dta`, `*.sav`, `*.por`, `*.parquet`, `*.feather`, except whitelisted output/example paths.
-- Raw-data-style spreadsheets or CSVs under `data/`.
+- Data files such as `*.dta`, `*.sav`, `*.por`, `*.parquet`, `*.feather`, `*.csv`, `*.json`, and `*.jsonl`, except narrow whitelisted output/example paths.
+- Raw-data-style spreadsheets such as `*.xls` and `*.xlsx`, except narrow whitelisted output/example paths.
 
 Allowed committed outputs:
 
 - `output/tables/*.csv`, `*.tex`, and other small non-PII summary tables.
 - `output/figures/*.pdf`, `*.png`.
+- `explorations/*/output/tables/*.csv`, `*.xls`, and `*.xlsx` only when they are small non-PII teaching or sandbox summary tables.
 - Template/example fixtures only when intentionally whitelisted.
 
 ## Quality Gates

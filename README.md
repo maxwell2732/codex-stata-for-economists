@@ -213,7 +213,11 @@ python scripts/quality_score.py scripts/check_data_safety.py
 - `*.por`
 - `*.parquet`
 - `*.feather`
-- `data/**/*.csv`
+- `*.csv`
+- `*.json`
+- `*.jsonl`
+- `*.xls`
+- `*.xlsx`
 
 允许提交的典型文件：
 
@@ -222,6 +226,7 @@ python scripts/quality_score.py scripts/check_data_safety.py
 - `data/derived/.gitkeep`
 - `output/tables/*.csv`
 - `output/tables/*.tex`
+- `explorations/*/output/tables/*.csv`
 - `output/figures/*.pdf`
 - `output/figures/*.png`
 

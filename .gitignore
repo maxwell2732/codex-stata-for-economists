@@ -24,19 +24,27 @@ data/derived/**
 *.por
 *.parquet
 *.feather
+*.csv
+*.json
+*.jsonl
 # Allow committed example/test fixtures and committed table outputs
 !output/tables/**/*.dta
+!output/tables/**/*.csv
 !templates/examples/**/*.dta
-!explorations/**/output/**/*.dta
+!templates/examples/**/*.csv
+!explorations/**/output/tables/**/*.csv
 
 # Raw-data-style spreadsheets (allow them under output/)
 *.xls
 *.xlsx
 !output/tables/**/*.xlsx
+!output/tables/**/*.xls
 !templates/examples/**/*.xlsx
+!templates/examples/**/*.xls
+!explorations/**/output/tables/**/*.xlsx
+!explorations/**/output/tables/**/*.xls
 
-# Raw CSVs are blocked outside output/ to prevent accidental commits
-data/**/*.csv
+# Keep data-directory marker files visible even though data files are blocked.
 !data/**/.gitkeep
 
 # ------------------------------------------------------------------------------
