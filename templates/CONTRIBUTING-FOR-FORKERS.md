@@ -12,7 +12,7 @@ wants to start a new empirical project.
 - [ ] Install Quarto: `https://quarto.org/docs/get-started/`
 - [ ] Install the Stata Quarto engine: `pip install nbstata` (or `pip install pystata`)
 - [ ] Install Python 3 (any recent version) for the safety / scoring scripts
-- [ ] In Stata, install user-written commands once: `ssc install reghdfe ftools estout ivreg2 ranktest boottest, replace`
+- [ ] In Stata, set `local INSTALL_DEPS = 1` in `dofiles/00_master.do` once to install the core, DID, and DDML packages; set it back to `0` after installation.
 
 ---
 

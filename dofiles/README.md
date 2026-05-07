@@ -22,3 +22,9 @@ Source code for the Stata pipeline.
 - Cluster SEs at the most aggregate plausible level by default — document the choice in a comment
 
 See `.claude/rules/stata-coding-conventions.md` and `.claude/rules/stata-reproducibility-protocol.md`.
+
+## Analysis Templates
+
+- `templates/did-analysis-template.do`: copy to `dofiles/03_analysis/05_did.do` for TWFE DID, Callaway-Sant'Anna DID, pre-trend checks, and event-study output.
+- `templates/ddml-analysis-template.do`: copy to `dofiles/03_analysis/06_ddml.do` for a DDML partial linear model using `ddml` with `rlasso` learners by default.
+- `dofiles/00_master.do` records and optionally installs the extra DID/DDML dependencies when `local INSTALL_DEPS = 1`.

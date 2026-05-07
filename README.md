@@ -4,7 +4,7 @@
 
 **作者：** 朱 晨 | 遗传社科研究 Chen Zhu | China Agricultural University (CAU)
 
-**最后更新：** 2026-04-30
+**最后更新：** 2026-05-07
 
 这是一个为经济学实证研究准备的 Stata 工作流。核心目标是让一个研究项目从原始数据、清洗、变量构造、模型估计，到表格、图形和 Quarto 报告，都能被稳定复现、被日志验证，并且适合由 Codex 协助维护。
 
@@ -72,6 +72,24 @@ codex
 - 图形输出到 `output/figures/`。
 - 报告使用 `reports/analysis_report.qmd`，通过 Quarto 渲染。
 - 探索性分析、教学示例和一次性实验放在 `explorations/`。
+
+---
+
+## 支持的分析类型
+
+本仓库默认支持常见 Stata 实证分析流程，包括描述统计、图形、OLS、固定效应回归、IV、事件研究、DID 和 DDML。正式分析通常放在 `dofiles/03_analysis/`，并通过 `dofiles/00_master.do` 串联到完整流水线。
+
+当前 DID/DDML 支持包括：
+
+- 基础 DID / TWFE：使用 `reghdfe` 吸收个体和时间固定效应，并按处理分配层级聚类标准误。
+- Staggered DID：模板支持 `csdid` 估计 Callaway-Sant'Anna group-time ATT、总体 ATT、pre-trend 检查和事件研究输出。
+- DDML：模板支持 `ddml + rlasso` 的部分线性模型，适合 Stata 15；Stata 16+ 且配置 Python/scikit-learn 后，可切换到 `pystacked` 学习器。
+- 依赖管理：`dofiles/00_master.do` 会记录 DID/DDML 命令是否可用；首次使用时可把 `local INSTALL_DEPS = 1` 打开安装核心包，安装后改回 `0`。
+
+可复制模板：
+
+- `templates/did-analysis-template.do`：复制到 `dofiles/03_analysis/05_did.do` 后替换变量名即可使用。
+- `templates/ddml-analysis-template.do`：复制到 `dofiles/03_analysis/06_ddml.do` 后替换变量名即可使用。
 
 ---
 
@@ -277,10 +295,11 @@ python scripts/quality_score.py scripts/check_data_safety.py
 
 ## 当前示例
 
-当前仓库包含两个探索性教学示例：
+当前仓库包含若干探索性教学和方法示例：
 
 - `explorations/hsb2_teaching_demo/`：基于 UCLA HSB2 数据的本科教学示例，包含描述统计、直方图和 OLS 回归。
 - `explorations/educwages_tutorial/`：面向 Stata 初学者的教育回报教学示例，包含描述统计、图形、OLS、IV 和 ANOVA。
+- `explorations/staggered_did_simulation/`：自包含的 staggered DID 模拟测试，使用 `csdid` 输出总体 ATT、事件研究表和事件研究图。
 
 这些示例用于展示工作流，不代表正式研究项目。
 

@@ -52,9 +52,14 @@ display "Date:             " c(current_date) " " c(current_time)
 display "Working dir:      " c(pwd)
 
 * User-written commands (paths confirm they're on the ado-path).
-foreach cmd in reghdfe ftools estout esttab ivreg2 ranktest boottest {
+local core_cmds reghdfe ftools estout esttab ivreg2 ranktest boottest
+local did_cmds csdid drdid did_multiplegt did_imputation ///
+    eventstudyinteract event_plot bacondecomp
+local ddml_cmds ddml rlasso lasso2 cvlasso pystacked
+
+foreach cmd in `core_cmds' `did_cmds' `ddml_cmds' {
     capture which `cmd'
-    if _rc display "  MISSING: `cmd'  (run 'ssc install `cmd', replace')"
+    if _rc display "  MISSING: `cmd'  (set INSTALL_DEPS = 1 if needed)"
 }
 
 log close
@@ -62,12 +67,30 @@ log close
 *--- 2. Install dependencies (one-time) ---------------------------------------
 if `INSTALL_DEPS' == 1 {
     log using "logs/00_master_install.log", replace text
+
+    * 基础回归、表格和推断工具。
     ssc install reghdfe, replace
     ssc install ftools, replace
     ssc install estout, replace
     ssc install ivreg2, replace
     ssc install ranktest, replace
     ssc install boottest, replace
+
+    * DID 工具：TWFE 诊断、现代错位处理 DID 和事件研究。
+    ssc install drdid, replace
+    ssc install csdid, replace
+    ssc install did_multiplegt, replace
+    ssc install did_imputation, replace
+    ssc install eventstudyinteract, replace
+    ssc install event_plot, replace
+    ssc install bacondecomp, replace
+
+    * DDML 工具：ddml 可配合 lassopack；pystacked 需要 Stata 16+、
+    * Python 3 和 scikit-learn。Stata 15 用户可先使用 lassopack 学习器。
+    ssc install ddml, replace
+    ssc install lassopack, replace
+    capture noisily net install pystacked, ///
+        from(https://raw.githubusercontent.com/aahrens1/pystacked/main) replace
     log close
 }
 
@@ -116,6 +139,8 @@ local t0 = clock(c(current_time), "hms")
 * do dofiles/03_analysis/02_event_study.do
 * do dofiles/03_analysis/03_iv_specification.do
 * do dofiles/03_analysis/04_robustness.do
+* do dofiles/03_analysis/05_did.do
+* do dofiles/03_analysis/06_ddml.do
 
 local t1 = clock(c(current_time), "hms")
 display "Stage 03 elapsed: " (`t1' - `t0') / 1000 " seconds"
