@@ -6,6 +6,8 @@
 
 **最后更新：** 2026-05-07
 
+**致谢：** [@shy7890](https://github.com/shy7890)（bug修复）
+
 这是一个为经济学实证研究准备的 Stata 工作流。核心目标是让一个研究项目从原始数据、清洗、变量构造、模型估计，到表格、图形和 Quarto 报告，都能被稳定复现、被日志验证，并且适合由 Codex 协助维护。
 
 本仓库原本包含 Claude Code 配置；现在已经改为 **Codex 优先、Claude Code 兼容** 的结构。Codex 进入项目后应优先读取 `AGENTS.md`，原有 `.claude/` 和 `CLAUDE.md` 保留用于兼容 Claude Code，也可作为更详细的规则参考。
