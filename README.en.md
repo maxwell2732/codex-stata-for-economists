@@ -10,6 +10,12 @@
   </a>
 </p>
 
+
+<p align="center">
+  <img src="master_supporting_docs/supporting_papers/codex-stata-for-economists-logo.png" width="80%">
+</p>
+
+
 # Codex Stata for Economists
 
 **Author:** Chen Zhu | China Agricultural University (CAU)
@@ -62,6 +68,24 @@ The repository is **Codex-first** and **Claude Code compatible**. Codex should r
   <img src="master_supporting_docs/supporting_papers/codeexample1.png" width="45%">
   <img src="master_supporting_docs/supporting_papers/codeexample2.png" width="45%">
 </p>
+
+---
+
+## Philosophy: Methodological Equity Through Practice
+
+A basic idea behind this project is **methodological equity: statistical and econometric methods should not belong only to the small group of people who are already familiar with software, code, and research workflows.**
+
+In traditional classrooms, students often do not stop because they fail to understand a statistical concept. More often, they get stuck on concrete and seemingly trivial details: where to put the data, how to organize do-files, how to read logs, how to export regression results, how to generate tables and figures, and how to reproduce a report. These technical barriers gradually widen the gap in methodological learning. Some students are kept outside empirical research before they have even truly entered it.
+
+The value of agents here is to lower the entry point into methodological training. An agent can help students turn scattered commands into a complete workflow, expose errors through logs, and connect tables, figures, and reports into a reproducible pipeline. It allows students to enter the practice of statistics, econometrics, and reproducible research with an agent by their side.
+
+But this kind of methodological access has one prerequisite: **you have to start moving.**
+
+If you only **watch AI from the sidelines, collect tools, hesitate to act, and keep waiting for other people’s reviews**, then even the most powerful agent will not matter. You will also be left behind in this wave.
+
+So do not hesitate. Start using it now, and gain your own first-hand experience.
+
+---
 
 ## Quick Start
 
