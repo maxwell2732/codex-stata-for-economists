@@ -1,8 +1,13 @@
-[![DOI](https://zenodo.org/badge/1225085678.svg)](https://doi.org/10.5281/zenodo.19902598)
-
 <p align="center">
-  <a href="README.md"><img src="https://img.shields.io/badge/语言-中文-blue" alt="中文"></a>
-  <a href="README.en.md"><img src="https://img.shields.io/badge/Language-English-green" alt="English"></a>
+  <a href="https://doi.org/10.5281/zenodo.19902598">
+    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19902598.svg" alt="DOI">
+  </a>
+  <a href="README.md">
+    <img src="https://img.shields.io/badge/语言-中文-blue" alt="中文">
+  </a>
+  <a href="README.en.md">
+    <img src="https://img.shields.io/badge/Language-English-green" alt="English">
+  </a>
 </p>
 
 # Codex Stata for Economists
