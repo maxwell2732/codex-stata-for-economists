@@ -18,6 +18,7 @@
 - **Plan first** — enter plan mode before non-trivial tasks; save plans to `quality_reports/plans/`
 - **Verify after** — run the do-file, inspect the log, confirm output exists at the end of every task
 - **Single source of truth** — `dofiles/00_master.do` is authoritative; reports include only outputs it produces
+- **Explore before production** — method simulations and one-off tests start in `explorations/<project>/` with their own `README.md`, `dofiles/`, `logs/`, and `output/`; promote to `dofiles/` only by intent
 - **Log-verified results** — every numerical claim must trace to a `logs/*.log` line or `output/tables/*.csv` cell. **No log, no claim.**
 - **Data privacy** — nothing under `data/raw/` or `data/derived/` is ever committed. Pre-commit safety check enforced.
 - **Reproducibility** — `version` pinned, `set seed YYYYMMDD` once, `.do` files runnable from a fresh clone
@@ -95,6 +96,8 @@ python scripts/quality_score.py dofiles/03_analysis/main_regression.do
 - **Reproducible randomness:** `set seed YYYYMMDD` at the top, never inside loops
 - **Relative paths only** — never `cd` to absolute paths; always reference from project root
 - **Cluster SEs** at the most aggregate plausible level by default; document the choice
+- **No root logs** — move Stata console transcripts into the relevant project or exploration `logs/` folder
+- **Stata comment pitfall** — avoid paths like `output/tables/*` in `.do` comments because `/*` starts a block comment
 
 ---
 

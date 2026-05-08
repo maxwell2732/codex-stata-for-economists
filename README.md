@@ -4,13 +4,32 @@
 
 **作者：** 朱 晨 | 遗传社科研究 Chen Zhu | China Agricultural University (CAU)
 
-**最后更新：** 2026-05-07
+**最后更新：** 2026-05-08
 
 **致谢：** [@shy7890](https://github.com/shy7890)（bug修复）
 
 这是一个为经济学实证研究准备的 Stata 工作流。核心目标是让一个研究项目从原始数据、清洗、变量构造、模型估计，到表格、图形和 Quarto 报告，都能被稳定复现、被日志验证，并且适合由 Codex 协助维护。
 
 本仓库原本包含 Claude Code 配置；现在已经改为 **Codex 优先、Claude Code 兼容** 的结构。Codex 进入项目后应优先读取 `AGENTS.md`，原有 `.claude/` 和 `CLAUDE.md` 保留用于兼容 Claude Code，也可作为更详细的规则参考。
+
+## English Overview
+
+**Codex Stata for Economists** is a reproducible Stata research workflow template for empirical economics and business-school research.
+
+It gives researchers a clean project structure for raw data, derived data, do-files, logs, tables, figures, Quarto reports, and exploratory analyses. The repository is designed for AI-assisted empirical work with Codex while keeping the key research rule explicit: **no numerical claim without a log or output table to verify it**.
+
+What this repo helps you do:
+
+- Build reproducible Stata pipelines around a single `dofiles/00_master.do` entry point.
+- Keep raw and derived data out of git by default.
+- Generate audit-friendly regression tables, summary tables, and figures.
+- Run common empirical workflows including OLS, fixed effects, IV, DID, event studies, DDML, and sandbox Cox hazard-ratio simulations.
+- Use `explorations/` for teaching demos, method tests, and one-off simulations before promoting them into the production pipeline.
+- Let Codex maintain the codebase under clear rules in `AGENTS.md`, with Claude Code compatibility preserved.
+
+Short description for sharing:
+
+> A Codex-first Stata workflow template for empirical economists: reproducible pipelines, protected data folders, log-verified results, publication-ready tables and figures, Quarto reports, and sandbox method demos.
 
 生成的 Stata 代码及图表示例：
 
@@ -302,6 +321,7 @@ python scripts/quality_score.py scripts/check_data_safety.py
 - `explorations/hsb2_teaching_demo/`：基于 UCLA HSB2 数据的本科教学示例，包含描述统计、直方图和 OLS 回归。
 - `explorations/educwages_tutorial/`：面向 Stata 初学者的教育回报教学示例，包含描述统计、图形、OLS、IV 和 ANOVA。
 - `explorations/staggered_did_simulation/`：自包含的 staggered DID 模拟测试，使用 `csdid` 输出总体 ATT、事件研究表和事件研究图。
+- `explorations/cox_hazard_ratio_simulation/`：自包含的 Cox proportional hazards 模拟测试，展示 `stset`、`stcox, hr`、比例风险假设诊断和生存曲线导出。
 
 这些示例用于展示工作流，不代表正式研究项目。
 

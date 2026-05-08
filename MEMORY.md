@@ -75,6 +75,14 @@ When a mistake is corrected, append a `[LEARN:category]` entry below.
 
 [LEARN:stata] Stata version pin (`version 17`) goes at the top of every do-file AND in `master.do`'s validation comment. User-written commands (`reghdfe`, `ftools`, `estout`, `ivreg2`, `boottest`) are listed in `templates/master-do-template.do` with `ssc install` recipe.
 
+[LEARN:stata] Stata `.do` header comments must not include paths like `output/tables/*`; the `/*` substring starts a block comment and can silently comment out later code. Use `output/tables/` in `.do` comments.
+
+[LEARN:stata] Stata 15 `stcurve` has limited per-line styling support. For styled survival curves, prefer `sts graph, survival by(group)` with white background, subtle horizontal gridlines, focal line RGB `"49 145 255"` / HEX `#3191FF`, muted comparison lines, and export both PDF and PNG.
+
+[LEARN:workflow] New methods, simulations, diagnostics, and teaching demos start as self-contained `explorations/<project>/` folders with `README.md`, `dofiles/`, `logs/`, and `output/{tables,figures}/`. Promote to production `dofiles/` only by explicit intent.
+
+[LEARN:workflow] Do not leave Stata run logs in the repository root. Move root-level console transcripts to the relevant project or exploration `logs/` folder, usually with a `_console.log` suffix. Logs stay gitignored.
+
 ## Data Protection (this template's bedrock)
 
 [LEARN:data] Raw data NEVER commits. `data/raw/` and `data/derived/` are blanket-gitignored; the `scripts/check_data_safety.py` pre-commit script enforces it. Forkers wire it into `.git/hooks/pre-commit` per the README. Whitelist exceptions exist for `output/tables/` and `templates/examples/` only.

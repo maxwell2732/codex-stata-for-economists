@@ -28,3 +28,10 @@ See `.claude/rules/stata-coding-conventions.md` and `.claude/rules/stata-reprodu
 - `templates/did-analysis-template.do`: copy to `dofiles/03_analysis/05_did.do` for TWFE DID, Callaway-Sant'Anna DID, pre-trend checks, and event-study output.
 - `templates/ddml-analysis-template.do`: copy to `dofiles/03_analysis/06_ddml.do` for a DDML partial linear model using `ddml` with `rlasso` learners by default.
 - `dofiles/00_master.do` records and optionally installs the extra DID/DDML dependencies when `local INSTALL_DEPS = 1`.
+
+## Sandbox Before Production
+
+- New method checks, simulations, and one-off tests should be created under `explorations/<project_name>/` first.
+- Only move a do-file into `dofiles/03_analysis/` and wire it into `00_master.do` when the user explicitly wants it in the production pipeline.
+- Keep production logs under top-level `logs/`; keep exploration logs under `explorations/<project_name>/logs/`.
+- In Stata header comments, avoid paths ending in `/*` such as `output/tables/*`, because Stata parses `/*` as a block-comment opener.

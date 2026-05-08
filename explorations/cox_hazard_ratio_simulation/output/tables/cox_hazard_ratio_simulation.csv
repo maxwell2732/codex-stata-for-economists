@@ -1,0 +1,4 @@
+variable,hazard_ratio,log_hr_robust_se,z,p_value,ci_lower,ci_upper,N,failures
+treatment,   0.5213,   0.1270,   -5.128,   0.0000,   0.4064,   0.6686,      600,      262
+age,   1.0147,   0.0065,    2.268,   0.0233,   1.0020,   1.0277,      600,      262
+female,   0.7649,   0.1232,   -2.176,   0.0295,   0.6009,   0.9737,      600,      262

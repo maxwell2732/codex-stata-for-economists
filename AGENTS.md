@@ -29,6 +29,15 @@ This repository is a Stata empirical-research workflow template. Codex should pr
 - `templates/`: reusable project templates.
 - `.claude/`: legacy Claude Code agents, skills, rules, and hooks. Treat as reference.
 
+## Exploration Workflow
+
+- New methods, one-off simulations, teaching examples, and diagnostic tests start in `explorations/<project_name>/`, not in the production `dofiles/` pipeline.
+- Each exploration should be self-contained: `README.md`, `dofiles/`, `logs/`, `output/tables/`, and `output/figures/`.
+- Keep exploration logs inside the corresponding exploration folder. Do not leave Stata console logs or run logs in the repository root.
+- If Stata batch mode creates a root-level console transcript such as `01_example.log`, move it to the relevant `explorations/<project_name>/logs/` folder, usually with a `_console.log` suffix.
+- Promote an exploration to production only after it is stable, documented, quality-checked, and intentionally wired into `dofiles/00_master.do`.
+- Cox proportional hazards / hazard-ratio examples belong in `explorations/` first unless the user explicitly asks to make them part of the production pipeline. Stata 15 supports the core workflow via `stset`, `stcox, hr`, `estat phtest`, and graph export.
+
 ## Non-Negotiable Rules
 
 - No numerical research claim without a source in `logs/*.log` or `output/tables/*`.
@@ -40,6 +49,7 @@ This repository is a Stata empirical-research workflow template. Codex should pr
 - Write new or modified Stata do-file comments in Chinese unless the user requests another language.
 - Keep reports downstream of pipeline outputs. Reports should consume `output/`, not become the primary analysis source.
 - Do not edit protected files casually: `dofiles/00_master.do`, `.gitignore`, and bibliography files if added later.
+- Do not put wildcard paths such as `output/tables/*` inside Stata block comments or header comments. Stata reads `/*` as the start of a block comment even when it appears inside a path, which can silently comment out the rest of a do-file. Prefer `output/tables/` in `.do` file headers.
 
 ## Commands
 
@@ -86,6 +96,7 @@ python scripts/check_data_safety.py --staged $(git diff --cached --name-only)
 - Export figures with native Stata `graph export` as both `.pdf` and `.png`; do not keep `.gph` as a committed artifact.
 - When generating a figure, always create both PDF and PNG outputs unless Stata itself cannot run.
 - Use a muted Stata-style graph design by default: white or very light gray background, subtle horizontal gridlines only, solid blue marks or bars using RGB `"49 145 255"` / HEX `#3191FF`, no glossy or gradient-like effects, no strong contrast edges, Arial or default Stata Sans fonts, normal-weight dark blue-gray titles, modest axis/tick label sizes, and Stata-default-like proportions with enough whitespace.
+- For survival curves, use the same graph style: white background, subtle horizontal gridlines, treatment or focal series in RGB `"49 145 255"` / HEX `#3191FF`, comparison series in muted blue-gray, restrained titles, and PDF plus PNG export. In Stata 15, `stcurve` has limited line-style options; use `sts graph, by(...)` when reliable per-line styling is needed.
 - Prefer `esttab` outputs as `.tex` plus `.csv` for auditability.
 - Cluster standard errors at the most defensible aggregate level and document the choice.
 
@@ -120,6 +131,7 @@ Never add these to version control:
 - `data/raw/**`, except `.gitkeep` and documentation.
 - `data/derived/**`, except `.gitkeep` and documentation.
 - Stata logs under `logs/`.
+- Stata logs under `explorations/*/logs/`.
 - Stata binary graphs `*.gph`.
 - Data files such as `*.dta`, `*.sav`, `*.por`, `*.parquet`, `*.feather`, `*.csv`, `*.json`, and `*.jsonl`, except narrow whitelisted output/example paths.
 - Raw-data-style spreadsheets such as `*.xls` and `*.xlsx`, except narrow whitelisted output/example paths.
