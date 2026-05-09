@@ -12,7 +12,7 @@
 
 
 <p align="center">
-  <img src="master_supporting_docs/supporting_papers/codex-stata-for-economists-logo.png" width="80%">
+  <img src="master_supporting_docs/supporting_papers/codex-stata-for-economists-logo2.png" width="80%">
 </p>
 
 
