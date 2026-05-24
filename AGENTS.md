@@ -87,7 +87,7 @@ python scripts/check_data_safety.py --staged $(git diff --cached --name-only)
 
 ## Stata Conventions
 
-- Local Stata is Stata 15: `C:\Program Files (x86)\Stata15\Stata-64.exe`.
+- Local Stata executable is `D:\stata\StataMP-64.exe` (StataMP 64-bit).
 - Pin Stata do-files to `version 15` unless the user explicitly changes the project standard.
 - Pin the Stata version at the top of each `.do` file.
 - Use one project-wide seed unless a task has a documented reason to do otherwise.
@@ -106,7 +106,8 @@ python scripts/check_data_safety.py --staged $(git diff --cached --name-only)
 - Miniconda root: `C:\ProgramData\Miniconda3`.
 - Conda executable: `C:\ProgramData\Miniconda3\Scripts\conda.exe`.
 - Python executable: `C:\ProgramData\Miniconda3\python.exe`.
-- Stata executable: `C:\Program Files (x86)\Stata15\Stata-64.exe`.
+- Stata executable: `D:\stata\StataMP-64.exe`.
+- The Stata wrappers check this explicit path before falling back to `PATH`.
 - Prefer explicit executable paths if `python`, `conda`, or `stata` are not found on `PATH`.
 
 ## Log Verification

@@ -7,7 +7,7 @@
 #
 # Behavior:
 #   * Runs from project root (whatever directory you invoke it from)
-#   * Picks the first available Stata executable from a known list
+#   * Picks the first available Stata executable from the configured path or PATH
 #   * Derives the log path from the do-file path if not given
 #   * Captures Stata's exit code and propagates it
 #   * Prints log tail on failure so the error is visible
@@ -15,7 +15,7 @@
 # Exit codes:
 #   0  — success
 #   1  — usage error
-#   2  — Stata not found on PATH
+#   2  — Stata not found at the configured path or on PATH
 #   3  — do-file not found
 #   N  — Stata exit code on failure
 
@@ -47,18 +47,44 @@ fi
 mkdir -p "$(dirname "$LOG_PATH")"
 
 # --- 3. Locate a Stata executable --------------------------------------------
-STATA_CANDIDATES=(stata-mp stata-se stata StataMP-64 StataSE-64 Stata-64)
+CONFIGURED_STATA_BIN="${STATA_BIN:-}"
+CONFIGURED_STATA_BIN_UNIX=""
+if [ -n "$CONFIGURED_STATA_BIN" ] && command -v wslpath >/dev/null 2>&1; then
+  CONFIGURED_STATA_BIN_UNIX="$(wslpath -u "$CONFIGURED_STATA_BIN" 2>/dev/null || true)"
+fi
+STATA_CANDIDATES=(
+  "$CONFIGURED_STATA_BIN"
+  "$CONFIGURED_STATA_BIN_UNIX"
+  "/mnt/d/stata/StataMP-64.exe"
+  "D:/stata/StataMP-64.exe"
+  "/d/stata/StataMP-64.exe"
+  stata-mp
+  stata-se
+  stata
+  StataMP-64
+  StataSE-64
+  Stata-64
+)
 STATA_BIN=""
+TRIED_CANDIDATES=()
 for CAND in "${STATA_CANDIDATES[@]}"; do
-  if command -v "$CAND" >/dev/null 2>&1; then
+  if [ -z "$CAND" ]; then
+    continue
+  fi
+  TRIED_CANDIDATES+=("$CAND")
+  if [ -f "$CAND" ]; then
     STATA_BIN="$CAND"
+    break
+  fi
+  if command -v "$CAND" >/dev/null 2>&1; then
+    STATA_BIN="$(command -v "$CAND")"
     break
   fi
 done
 
 if [ -z "$STATA_BIN" ]; then
-  echo "error: no Stata executable found on PATH (tried: ${STATA_CANDIDATES[*]})" >&2
-  echo "       install Stata or add it to PATH; see CLAUDE.md prerequisites." >&2
+  echo "error: no Stata executable found (tried: ${TRIED_CANDIDATES[*]})" >&2
+  echo "       expected local Stata at D:/stata/StataMP-64.exe, or set STATA_BIN." >&2
   exit 2
 fi
 

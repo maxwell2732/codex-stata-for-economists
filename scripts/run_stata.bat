@@ -1,6 +1,6 @@
 @echo off
 rem ============================================================================
-rem run_stata.bat — Windows wrapper around StataMP-64 / StataSE-64 / Stata-64.
+rem run_stata.bat — Windows wrapper around the configured Stata executable.
 rem
 rem Usage:
 rem   scripts\run_stata.bat <path\to\file.do> [<log\path.log>]
@@ -35,7 +35,18 @@ for %%I in ("%LOG_PATH%") do set "LOG_DIR=%%~dpI"
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
 
 rem --- Locate Stata -----------------------------------------------------------
+set "CONFIGURED_STATA_BIN=%STATA_BIN%"
 set "STATA_BIN="
+if not "%CONFIGURED_STATA_BIN%"=="" (
+  if exist "%CONFIGURED_STATA_BIN%" (
+    set "STATA_BIN=%CONFIGURED_STATA_BIN%"
+    goto :found
+  )
+)
+if exist "D:\stata\StataMP-64.exe" (
+  set "STATA_BIN=D:\stata\StataMP-64.exe"
+  goto :found
+)
 for %%C in (StataMP-64.exe StataSE-64.exe Stata-64.exe stata-mp.exe stata-se.exe stata.exe) do (
   where %%C >nul 2>nul
   if !ERRORLEVEL! == 0 (
@@ -43,8 +54,8 @@ for %%C in (StataMP-64.exe StataSE-64.exe Stata-64.exe stata-mp.exe stata-se.exe
     goto :found
   )
 )
-echo error: no Stata executable found on PATH
-echo        install Stata or add it to PATH; see CLAUDE.md prerequisites.
+echo error: no Stata executable found
+echo        expected local Stata at D:\stata\StataMP-64.exe, or set STATA_BIN.
 exit /b 2
 
 :found
@@ -53,7 +64,7 @@ echo [run_stata] do-file:  %DOFILE%
 echo [run_stata] log:      %LOG_PATH%
 echo [run_stata] starting: %DATE% %TIME%
 
-%STATA_BIN% /e do "%DOFILE%"
+"%STATA_BIN%" /e do "%DOFILE%"
 set "RC=%ERRORLEVEL%"
 
 echo [run_stata] exit:     %RC%

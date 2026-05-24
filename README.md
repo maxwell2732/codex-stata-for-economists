@@ -358,17 +358,13 @@ python scripts/quality_score.py scripts/check_data_safety.py
 | Quarto | 渲染报告 |
 | Git/GitHub CLI | 版本控制和协作 |
 
-本机 Stata 版本是 Stata 15，路径是：
+本机 Stata 可执行文件路径是：
 
 ```text
-C:\Program Files (x86)\Stata15\Stata-64.exe
+D:\stata\StataMP-64.exe
 ```
 
-如果 Stata 不在 `PATH` 中，需要先加入路径。例如 Windows Git Bash 下：
-
-```bash
-export PATH="/c/Program Files (x86)/Stata15:$PATH"
-```
+`scripts/run_stata.sh` 和 `scripts/run_stata.bat` 会优先检查这个路径；如果需要临时覆盖，可以设置 `STATA_BIN`。do-file 仍应使用相对路径，并保持项目标准的 `version 15`，除非用户明确要求更改。
 
 然后可以运行：
 
