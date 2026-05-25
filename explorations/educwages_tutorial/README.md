@@ -34,12 +34,9 @@ From the project root:
 bash scripts/run_stata.sh explorations/educwages_tutorial/dofiles/01_tutorial.do
 ```
 
-If Stata is not on your `PATH` (Chen's machine: Stata 15 lives at
-`C:\Program Files (x86)\Stata15\`), add it first for this session:
-
-```bash
-export PATH="/c/Program Files (x86)/Stata15:$PATH"
-```
+The project wrapper checks `D:\stata\StataMP-64.exe` before `PATH`. If your
+Stata executable is somewhere else, set `STATA_BIN` or add that location to
+`PATH`.
 
 Or, from inside an interactive Stata session:
 

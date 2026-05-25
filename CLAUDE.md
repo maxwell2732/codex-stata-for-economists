@@ -85,9 +85,9 @@ python scripts/quality_score.py dofiles/03_analysis/main_regression.do
 
 ## Stata Conventions (Non-Negotiable)
 
-- **Stata version on this machine:** Stata 15 (`C:\Program Files (x86)\Stata15\Stata-64.exe`).
-  Added to PATH via `~/.bashrc` so `scripts/run_stata.sh` resolves it.
-  **Do NOT use Stata 18** even though it is installed — version mismatches break reproducibility.
+- **Stata executable on this machine:** `D:\stata\StataMP-64.exe` (StataMP 64-bit).
+  `scripts/run_stata.sh` and `scripts/run_stata.bat` check this explicit path before `PATH`.
+  Keep project do-files pinned to `version 15` unless the user explicitly changes the standard.
 - **Python on this machine:** Miniconda at `C:\ProgramData\Miniconda3\python.exe`.
   Conda is at `C:\ProgramData\Miniconda3\Scripts\conda.exe`.
 - **Pin Stata version** at top of every do-file: `version 15`

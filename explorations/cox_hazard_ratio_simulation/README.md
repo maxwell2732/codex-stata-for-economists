@@ -22,5 +22,5 @@ scripts\run_stata.bat explorations\cox_hazard_ratio_simulation\dofiles\07_cox_ha
 Or run Stata directly:
 
 ```powershell
-& 'C:\Program Files (x86)\Stata15\Stata-64.exe' /e do 'explorations\cox_hazard_ratio_simulation\dofiles\07_cox_hazard_ratio.do'
+& 'D:\stata\StataMP-64.exe' /e do 'explorations\cox_hazard_ratio_simulation\dofiles\07_cox_hazard_ratio.do'
 ```

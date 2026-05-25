@@ -207,11 +207,13 @@ python scripts/quality_score.py dofiles/03_analysis/main_regression.do
 
 ## Local Environment Notes
 
-This template is currently configured around Stata 15 on Windows:
+This template is currently configured around this Stata executable on Windows:
 
 ```text
-C:\Program Files (x86)\Stata15\Stata-64.exe
+D:\stata\StataMP-64.exe
 ```
+
+The wrappers `scripts/run_stata.sh` and `scripts/run_stata.bat` check this explicit path before falling back to `PATH`. Set `STATA_BIN` if you need to override it temporarily. Do-files should still use relative project paths and stay pinned to `version 15` unless the project standard intentionally changes.
 
 Python is expected to be Miniconda:
 

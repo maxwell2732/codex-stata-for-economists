@@ -23,10 +23,9 @@ From the project root:
 bash scripts/run_stata.sh explorations/hsb2_teaching_demo/dofiles/01_demo.do
 ```
 
-If Stata is not on your `PATH`, add it first (Chen's machine: Stata 15 lives at
-`C:\Program Files (x86)\Stata15\`; add that to `PATH` either temporarily
-(`export PATH="/c/Program Files (x86)/Stata15:$PATH"`) or permanently in
-Windows System Environment Variables).
+The project wrapper checks `D:\stata\StataMP-64.exe` before `PATH`. If your
+Stata executable is somewhere else, set `STATA_BIN` or add that location to
+`PATH`.
 
 Or, from inside an interactive Stata session:
 

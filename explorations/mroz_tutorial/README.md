@@ -8,10 +8,10 @@
 bash scripts/run_stata.sh explorations/mroz_tutorial/dofiles/01_mroz_analysis.do
 ```
 
-或在 Windows PowerShell 中直接使用本机 Stata 15：
+或在 Windows PowerShell 中直接使用本机 Stata：
 
 ```powershell
-& 'C:\Program Files (x86)\Stata15\Stata-64.exe' /b do 'explorations\mroz_tutorial\dofiles\01_mroz_analysis.do'
+& 'D:\stata\StataMP-64.exe' /b do 'explorations\mroz_tutorial\dofiles\01_mroz_analysis.do'
 ```
 
 主要输出：

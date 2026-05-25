@@ -63,7 +63,7 @@ Execute one do-file end-to-end via `scripts/run_stata.sh` (POSIX) or `scripts/ru
 
 ## Troubleshooting
 
-- **"stata: command not found"** — the wrapper tries `stata`, `stata-mp`, `stata-se`, `StataMP-64`, `StataSE-64` in order. If none work, install Stata or add it to PATH.
+- **"stata: command not found"** — the wrapper checks `STATA_BIN`, then `D:\stata\StataMP-64.exe`, then common Stata command names on `PATH`. If none work, set `STATA_BIN` or add Stata to `PATH`.
 - **Wrapper exits 0 but log shows errors** — Stata sometimes returns 0 even on `r(<n>)` errors. Always run step 4. The `validate-log` skill catches this.
 - **Log file not created** — the do-file is missing `log using`. Add it per `stata-coding-conventions.md`.
 - **Permission denied** — `chmod +x scripts/run_stata.sh`.
