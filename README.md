@@ -19,7 +19,7 @@
 
 **作者：** 朱 晨 | 遗传社科研究 Chen Zhu | China Agricultural University (CAU)
 
-**最后更新：** 2026-05-08
+**最后更新：** 2026-05-26
 
 **致谢：** [@shy7890](https://github.com/shy7890)（bug修复）
 
@@ -216,6 +216,26 @@ bash scripts/run_pipeline.sh
 bash scripts/run_stata.sh dofiles/03_analysis/main_regression.do
 ```
 
+运行 CHNS 身高溢价探索示例：
+
+```bash
+C:\ProgramData\Miniconda3\python.exe explorations\chns_height_premium\scripts\build_height_core.py
+bash scripts/run_stata.sh explorations/chns_height_premium/dofiles/01_height_premium.do
+```
+
+该示例会先生成 gitignored 的本地分析数据：
+
+```text
+data/derived/chns_height_premium_analysis.dta
+```
+
+然后输出 OLS、父母身高 IV、描述统计、图形和日志到：
+
+```text
+explorations/chns_height_premium/output/
+explorations/chns_height_premium/logs/
+```
+
 渲染 Quarto 报告：
 
 ```bash
@@ -338,6 +358,7 @@ python scripts/quality_score.py scripts/check_data_safety.py
 
 - `explorations/hsb2_teaching_demo/`：基于 UCLA HSB2 数据的本科教学示例，包含描述统计、直方图和 OLS 回归。
 - `explorations/educwages_tutorial/`：面向 Stata 初学者的教育回报教学示例，包含描述统计、图形、OLS、IV 和 ANOVA。
+- `explorations/chns_height_premium/`：基于 CHNS 的身高溢价探索示例，展示大 CSV 窄表抽取、analysis-ready `.dta` 生成、最大截面选择、OLS、父母身高 IV、图表导出和详细中文教学注释。
 - `explorations/staggered_did_simulation/`：自包含的 staggered DID 模拟测试，使用 `csdid` 输出总体 ATT、事件研究表和事件研究图。
 - `explorations/cox_hazard_ratio_simulation/`：自包含的 Cox proportional hazards 模拟测试，展示 `stset`、`stcox, hr`、比例风险假设诊断和生存曲线导出。
 
