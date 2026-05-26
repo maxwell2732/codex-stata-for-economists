@@ -92,6 +92,8 @@ python scripts/check_data_safety.py --staged $(git diff --cached --name-only)
 - Pin the Stata version at the top of each `.do` file.
 - Use one project-wide seed unless a task has a documented reason to do otherwise.
 - Open and close logs inside runnable do-files.
+- For teaching, exploration, or user-facing do-files, prefer explicit commands over Stata macro indirection. Avoid unnecessary `` `local' `` macro use, especially in regression specifications. If a command must be easy to run line-by-line in the Do-file Editor, write the full control-variable list directly in the command rather than relying on a prior `local controls ...` line.
+- Use local macros sparingly for stable paths or repeated filenames only when they materially improve readability. Do not hide key model choices, sample restrictions, or variable lists inside macros if that makes partial reruns fragile.
 - Store estimation results with `estimates store` or `est store` when table assembly depends on them.
 - Export figures with native Stata `graph export` as both `.pdf` and `.png`; do not keep `.gph` as a committed artifact.
 - When generating a figure, always create both PDF and PNG outputs unless Stata itself cannot run.
@@ -99,6 +101,11 @@ python scripts/check_data_safety.py --staged $(git diff --cached --name-only)
 - For survival curves, use the same graph style: white background, subtle horizontal gridlines, treatment or focal series in RGB `"49 145 255"` / HEX `#3191FF`, comparison series in muted blue-gray, restrained titles, and PDF plus PNG export. In Stata 15, `stcurve` has limited line-style options; use `sts graph, by(...)` when reliable per-line styling is needed.
 - Prefer `esttab` outputs as `.tex` plus `.csv` for auditability.
 - Cluster standard errors at the most defensible aggregate level and document the choice.
+- For large CSV workflows, do not assume Stata can reliably import only selected columns across versions. If the source is too wide or slow, use a small reproducible Miniconda Python helper to stream selected columns into `data/derived/`, then have Stata read the narrow extract.
+- For user replication convenience, produce an analysis-ready `.dta` in `data/derived/` when the workflow requires substantial merging or cleaning. Keep the `.dta` gitignored and document the command to regenerate it.
+- Do not rely on Stata `shell` calls inside batch-mode do-files for required preprocessing. Run Python/R preprocessing explicitly before Stata, or fail with a clear message telling the user which helper command to run.
+- When using variables with encoded categories, verify from the codebook whether values are true quantities or category codes. Do not treat education, occupation, or survey response codes as continuous measures unless the codebook confirms they are measured on a numeric scale.
+- If a do-file includes numerical interpretation in comments, cite the generated log or output table in the comment and keep the numbers synchronized by rerunning the script after model changes.
 
 ## Local Environment
 
@@ -161,6 +168,8 @@ For `explorations/`, the quality bar is relaxed because these are sandbox or tea
 - Keep this repository usable by both Codex and Claude Code.
 - If changing workflow rules, update `AGENTS.md` and any affected README section together.
 - If changing Stata behavior, run the relevant wrapper when Stata is available; otherwise state exactly what was not verified.
+- After running Stata batch jobs, check for root-level console transcripts such as `01_height_premium.log` and move them into the corresponding exploration `logs/` folder with a `_console.log` suffix.
+- When a user reports a mismatch between their Stata output and reported results, first check whether macros, partial do-file execution, sample filters, or stale derived files changed the actual specification.
 
 ## Legacy Claude Code Material
 
